@@ -1,5 +1,5 @@
-Student Name: Justin Yeap
-netID: mq5839
+Student Name: Justin Yeap  
+netID: mq5839  
 
 # Student Static Restaurant Website Project
 
