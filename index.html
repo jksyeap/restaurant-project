@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <!-- What else should be in the head? -->
   <title>Tony Pepperoni's Food Shack</title>
   <!--  Internal style sheet goes here  -->
   <style>
-    body {background-color:LightSteelBlue;}
-    #RestaurantInfo {text-align:center;max-width:50%;margin:auto}
-    #menu {max-width:40%;border:1px inset black;margin:auto}
+    body {background-color:#919252;}
+    main {background-color:white;max-width:65%;margin:auto;padding:20px;}
+    #RestaurantInfo {text-align:center;}
+    #menu {border:10px inset gray;margin:auto;padding:20px 20px 120px 20px;}
+    .innerList {list-style-type:none;}
+    .innerList li {padding:1px 0px 1px 6px;}
+    #innerList1 li {border-left:5px solid #f3bf1e;}
+    #innerList2 li {border-left:5px solid #602a10;}
+    #innerList3 li {border-left:5px solid #bb6210;}
+    #innerList4 li {border-left:5px solid #db8360;}
+    figcaption {text-align:center;}
+    .foodPic {list-style-type:none;}
   </style>
 </head>
 <body>
@@ -19,13 +27,23 @@
     <header id="RestaurantInfo">
       <h1>Tony Pepperoni's Food Shack</h1>
       <h2>612 Wharf Avenue</h2>
+      <figure>
+        <img src="restaurant1.jpg" alt="Restaurant Location">
+      </figure>
       <h3>Monday to Saturday 10am - 8pm</h3>
     </header>
     <section id="menu">
       <header>Menu</header>
       <ul>
-        <li>Pizzas and Pasta
-          <ul>
+        <li class="foodPic">
+          <figure style="float:right">
+            <img src="nasi_lemak.jpg" alt="Picture of Nasi Lemak">
+            <figcaption>Nasi Lemak</figcaption>
+          </figure>
+        </li>
+        
+        <li><header>Pizzas and Pasta</header>
+          <ul class="innerList" id="innerList1">
             <li>Cheese and Thank You (Cheese Pizza)</li>
             <li>Gimme Olive Your Stuff (Olive and Mushroom Pizza)</li>
             <li>The Ham of the House (Ham and Pineapple Pizza)</li>
@@ -33,29 +51,39 @@
             <li>Tony Pepperoni's Macaroni (Macaroni and Cheese)</li>
           </ul>
         </li>
-        <li>Burgers
-          <ul>
+        
+        <li><header>Burgers</header>
+          <ul class="innerList" id="innerList2">
             <li>Too Many Food Punions (Burger with Onion Rings)</li>
             <li>Hard Guac Cafe (Guacamole Burger)</li>
             <li>The Way You Make Me Peel (Burger with Grilled Onions)</li>
           </ul>
         </li>
-        <li>Asian Food
-          <ul>
+        
+        <li><header>Asian Food</header>
+          <ul class="innerList" id="innerList3">
             <li>Nasi Lemak (Coconut Rice with Chili and Anchovies)</li>
             <li>Roti Canai (Indian Flatbread with Fish Curry)</li>
+            <li class="foodPic">
+              <figure style="float:right">
+                <img src="roti_canai.jpg" alt="Picture of Roti Canai">
+                <figcaption>Roti Canai</figcaption>
+              </figure>
+            </li>
             <li>Shoyu Ramen (Ramen with Soy Sauce)</li>
             <li>Xiao Long Bao (Dumpling with Soup Inside)</li>
             <li>Kaya Toast (Toast with Sweet Jam)</li>
           </ul>
         </li>
-        <li>Ice Cream
-          <ul>
+
+        <li><header>Ice Cream</header>
+          <ul class="innerList" id="innerList4">
             <li>Get In The Van-illa (Vanilla Ice Cream)</li>
             <li>Feelin' Rummy (Rum Ice Cream)</li>
             <li>/root (Root Beer Float)</li>
           </ul>
         </li>
+        
       </ul>
     </section>
   </main>
