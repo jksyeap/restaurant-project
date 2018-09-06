@@ -37,7 +37,7 @@ qIndexSpan.innerHTML = qIndex + 1;
 
 // initialize buttons
 initButtons();
-
+displayQuestion();
 
 /* Functions defined below here */
 
@@ -53,8 +53,31 @@ function initButtons() {
 
 /* You may want to define functions like the following to attach to buttons */
 
-/* Takes the content from the text areas and adds
- to the quesiton list */
+/* Takes the content from the text areas and adds to the quesiton list */
 function addQuestion() {
-  // You provide the functionality.
+  let temp = {question:"", answer:""};
+  let questionArea = document.getElementById("Question");
+  let answerArea = document.getElementById("Answer");
+  temp.question = questionArea.value;
+  temp.answer = answerArea.value;
+  questions.push(temp);
+  questionArea.value = "";
+  answerArea.value = "";
+}
+
+function removeQuestion() {
+  if(questions.length > 0) {questions.slice(qIndex,1);}
+}
+
+function displayQuestion() {
+  let questionDiv = document.getElementById("contentQ");
+  let answerDiv = document.getElementById("contentA");
+  let questionP = document.createElement("p");
+  let answerP = document.createElement("p");
+  if(questionDiv.hasChildNodes()) {questionDiv.removeChild(questionDiv.childNodes[0]);}
+  if(answerDiv.hasChildNodes()) {answerDiv.removeChild(answerDiv.childNodes[0]);}
+  questionDiv.appendChild(questionP);
+  answerDiv.appendChild(answerP);
+  questionP.innerHTML = questions[qIndex].question;
+  answerP.innherHTML = questions[qIndex].answer;
 }
