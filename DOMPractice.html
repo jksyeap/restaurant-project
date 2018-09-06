@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>DOM Practice</title>
+  <link href="DOMPractice.css" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <section id="Tester">
+      <section id="Controls">
+        <button type="button" id="BForward">Forward</button>
+        <button type="button" id="BBack">Back</button>
+        <button type="button" id="BShow">Show Answer</button>
+        <button type="button" id="BShowQC">Show Question Creator</button>
+        <button type="button" id="BRemove">Remove Question</button>
+        <p id="Info">Question <span id="qIndex"></span> of
+          <span id="qCount"></span></p>
+      </section>
+      <h2>Test Yourself</h2>
+      <section id="currentQ">
+        <h3>Question</h3>
+        <div id="contentQ"></div>
+      </section>
+
+      <section id="currentA">
+        <h3>Answer</h3>
+        <div id="contentA"></div>
+        <button type="button" id="BHideA">Hide Answer</button>
+      </section>
+
+    </section>
+    <section id="QCreator">
+      <h2>Create Q&amp;A</h2>
+      <button type="button" id="BAddQ">Add Q &amp; A</button>
+      <button type="button" id="BHideQC">Hide Question Creator</button>
+      <section id="Inputs">
+        <textarea id="Question"></textarea>
+        <textarea id="Answer"></textarea>
+      </section>
+    </section>
+  </main>
+  <script src="DOMPractice.js"></script>
+</body>
+
+</html>

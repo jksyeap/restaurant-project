@@ -1,0 +1,50 @@
+body {
+  margin: 1em;
+  background-color: burlywood;
+}
+
+main {
+  background-color: white;
+  padding: 1em;
+}
+
+#currentA {
+  border: dashed;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  background-color: #accfe7;
+}
+
+textarea {
+  display: block;
+  width: 23em;
+  height: 5em;
+  margin-bottom: 2em;
+}
+
+#QCreator, #Tester {
+  border: solid;
+  min-height: 100px;
+  padding: 0.5em;
+}
+
+#QCreator {
+  margin-top: 1em;
+}
+
+/* You may want to define a couple classes here to move the answer on and
+  off the screen. 
+*/
+
+
+
+/* Using these classes to hide and show the question creator */
+
+.hideStuff {
+  display: none;
+}
+
+.showStuff {
+  display: block;
+}
