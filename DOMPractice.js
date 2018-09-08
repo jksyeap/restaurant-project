@@ -38,17 +38,22 @@ qIndexSpan.innerHTML = qIndex + 1;
 // initialize buttons
 initButtons();
 displayQuestion();
+toggleQCreator();
+toggleAnswer();
 
 /* Functions defined below here */
 
 /* Attach buttons to their handler functions here. Button id:
  BForward BBack BShow BShowQC BRemove BHideA BAddQ BHideQC */
 function initButtons() {
-  // Show and hide creator
-  // Show and hide answer
-  // Forward and back Questions
-  // Remove question
-  // Add question
+  document.getElementById("BShowQC").addEventListener("click",toggleQCreator); // Show and hide creator
+  document.getElementById("BHideQC").addEventListener("click",toggleQCreator);
+  document.getElementById("BShow").addEventListener("click",toggleAnswer);     // Show and hide answer
+  document.getElementById("BHideA").addEventListener("click",toggleAnswer);
+  document.getElementById("BForward").addEventListener("click",forward);       // Forward and back Questions
+  document.getElementById("BBack").addEventListener("click",back);
+  document.getElementById("BRemove").addEventListener("click",removeQuestion); // Remove question
+  document.getElementById("BAddQ").addEventListener("click",addQuestion);      // Add question
 }
 
 /* You may want to define functions like the following to attach to buttons */
@@ -63,10 +68,28 @@ function addQuestion() {
   questions.push(temp);
   questionArea.value = "";
   answerArea.value = "";
+  qCountSpan.innerHTML = questions.length;
+  if(qIndex == -1) 
+  {
+    qIndex = 0;
+    qIndexSpan.innerHTML = qIndex + 1;
+    displayQuestion();
+  }
 }
 
 function removeQuestion() {
-  if(questions.length > 0) {questions.slice(qIndex,1);}
+  
+  if(questions.length > 0) 
+  {
+    if(qIndex+1 == questions.length)
+    {
+      qIndex = qIndex - 1;
+      qIndexSpan.innerHTML = qIndex + 1;
+    }
+    questions.splice(qIndex,1);
+    qCountSpan.innerHTML = questions.length;
+    displayQuestion();
+  }
 }
 
 function displayQuestion() {
@@ -79,5 +102,45 @@ function displayQuestion() {
   questionDiv.appendChild(questionP);
   answerDiv.appendChild(answerP);
   questionP.innerHTML = questions[qIndex].question;
-  answerP.innherHTML = questions[qIndex].answer;
+  answerP.innerHTML = questions[qIndex].answer;
+}
+
+function toggleQCreator() {
+  let questionCreator = document.getElementById("QCreator");
+  if(questionCreator.classList.length == 0)
+  {
+    questionCreator.classList.add("hideStuff");
+    return;
+  }
+  let check = questionCreator.classList.toggle("showStuff");
+  //if(check == true) {document.getElementById("BShowQC").removeEventListener("click",toggleQCreator);}
+  //else {document.getElementById("BShowQC").addEventListener("click",toggleQCreator);}
+}
+
+function forward() {
+  qIndex = (qIndex + 1) % questions.length;
+  displayQuestion();
+  qIndexSpan.innerHTML = qIndex + 1;
+}
+
+function back() {
+  qIndex = qIndex - 1;
+  if(qIndex == -1) {qIndex = questions.length - 1;}
+  displayQuestion();
+  qIndexSpan.innerHTML = qIndex + 1;
+}
+
+function toggleAnswer() {
+  let answerDiv = document.getElementById("contentA");
+  let hideAnswerButton = document.getElementById("BHideA");
+  if(answerDiv.classList.length == 0)
+  {
+    answerDiv.classList.add("hideAnswer");
+    hideAnswerButton.classList.add("hideAnswer");
+    return;
+  }
+  let check = answerDiv.classList.toggle("showAnswer");
+  hideAnswerButton.classList.toggle("showAnswer");
+  //if(check == true) {document.getElementById("BShow").removeEventListener("click",toggleAnswer);}
+  //else {document.getElementById("BShow").addEventListener("click",toggleAnswer);}
 }

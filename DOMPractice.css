@@ -37,7 +37,17 @@ textarea {
   off the screen. 
 */
 
+.hideAnswer {
+  position: relative;
+  left: -100vw;
+  transition: left 0.4s;
+}
 
+.showAnswer {
+  position: relative;
+  left: 0px;
+  transition: left 0.4s;
+}
 
 /* Using these classes to hide and show the question creator */
 
