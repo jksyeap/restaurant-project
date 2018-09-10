@@ -1,0 +1,99 @@
+main {
+  background-color:#f4efe8;
+  max-width:63vw;
+  margin:auto;
+  min-height:80vh;
+  padding:20px;
+}
+
+body {
+  background-color:#c12e2e;
+  font-family:Futura,'Century Gothic',AppleGothic,sans-serif;
+}
+
+/*body {*/
+/*  background-color:#5d7c4a;*/
+/*  font-family:Futura,'Century Gothic',AppleGothic,sans-serif;*/
+/*}*/
+
+#RestaurantInfo {
+  text-align:center;
+}
+
+#menu {
+  border:10px inset gray;
+  margin:auto;
+  padding:20px 20px 120px 20px;
+}
+
+.innerList {
+  list-style-type:none;
+}
+
+.innerList li {
+  padding:1px 0px 1px 6px;
+}
+
+#innerList1 li {
+  border-left:5px solid #f3bf1e;
+}
+
+#innerList2 li {
+  border-left:5px solid #602a10;
+}
+
+#innerList3 li {
+  border-left:5px solid #bb6210;
+}
+
+#innerList4 li {
+  border-left:5px solid #db8360;
+}
+
+figcaption {
+  text-align:center;
+}
+
+.foodPic {
+  list-style-type:none;
+}
+
+.foodCategory header {
+  padding-top:20px;
+  padding-bottom:5px;
+  text-decoration:underline;
+}
+
+.floated {
+  float:right;
+}
+
+nav {
+  position:absolute;
+  top:0px;
+  left:0px;
+  margin-top: 5px;
+}
+
+#navBar {
+  list-style-type:none;
+}
+
+#navBar li {
+  margin-bottom: 8px;
+  border: 3px solid #f4efe8;
+  /*padding-top: 10px;*/
+  /*padding-bottom: 10px;*/
+  min-width: 10vw;
+}
+
+a {
+  display: block;
+  color:#f4efe8;
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-indent: 0.5em;
+}
