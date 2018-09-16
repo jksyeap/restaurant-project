@@ -25,12 +25,14 @@
         </tr></thead>
     <tbody>
 <!-- Generate the table here. -->
-      {% for entry in prizes %}
+      {% for prize in prizes %}
+      {% for laureate in prize.laureates %}
       <tr>
-        <td>{{entry.year}}</td>
-        <td>{{entry.laureates[0].firstname}} {{entry.laureates[0].surname}}</td>
-        <td>{{entry.laureates[0].motivation}}</td>
+        <td>{{prize.year}}</td>
+        <td>{{laureate.firstname}}  {{laureate.surname}}</td>
+        <td>{{laureate.motivation}}</td>
       </tr>
+      {% endfor %}
       {% endfor %}
     </tbody>
       </table>

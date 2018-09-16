@@ -71,7 +71,7 @@ for (let catDate of catDates) {
                      "category":catDate.title,
                      "start":catDate.start,
                      "end":catDate.end};
-                     
+    prizeInfo.prizes.sort(function(a,b) {return a.year - b.year});     
     let outString = nunjucks.render('prizes.njk', prizeInfo);
     
     // Write the file
