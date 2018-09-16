@@ -1,0 +1,37 @@
+/*  Optional style sheet for prizes. This needs to be in your "output" directory
+    if used.
+*/
+body {
+  margin: 1em;
+}
+
+h1, h2 {
+  text-align: center;
+    font-family: sans-serif;
+  font-style:italic;
+}
+thead th {
+  text-align: left;
+  font-family: sans-serif;
+  font-style:italic;
+}
+
+table {
+  table-layout: fixed;
+    border-collapse: collapse;
+  border: 3px solid black;
+}
+
+td, th {
+  border: thin black solid;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-bottom: 0.2em;
+}
+
+nav p {
+  font-family: sans-serif;
+  background-color:aliceblue;
+  display: flex;
+  justify-content: space-around;
+}
