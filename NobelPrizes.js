@@ -40,6 +40,13 @@ let catDates = [{
         end: 2010,
         title: "Medicine",
         fname: "medicine.html"
+    },
+    {
+        topic: "literature",
+        start: 1960,
+        end: 1970,
+        title: "Literature",
+        fname: "literature.html"
     }];
 
 
@@ -49,6 +56,13 @@ nunjucks.configure({
 nunjucks.configure('views', {
     autoescape: true
 });
+
+// get list of topics for the nav bar
+let pages = [];
+for(let catDate of catDates)
+{
+    pages.push({"title":catDate.title, "fname":catDate.fname});
+}
 
 // Process prizes.json to get only information of interest
 let prizeArray = prizesJSON.prizes;
@@ -70,7 +84,8 @@ for (let catDate of catDates) {
     let prizeInfo = {"prizes":prizeInfoArray,
                      "category":catDate.title,
                      "start":catDate.start,
-                     "end":catDate.end};
+                     "end":catDate.end,
+                     "pages":pages};
     prizeInfo.prizes.sort(function(a,b) {return a.year - b.year});     
     let outString = nunjucks.render('prizes.njk', prizeInfo);
     

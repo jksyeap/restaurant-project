@@ -15,6 +15,9 @@
       <nav>
           <p> Other categories: 
 <!-- Links to other pages. Generate these from data passed in -->
+            {% for page in pages %}
+              <a href="{{page.fname}}">{{page.title}}</a>
+            {% endfor %}
           </p>
       </nav>
 <table>
