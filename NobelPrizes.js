@@ -13,7 +13,7 @@ const fs = require('fs'); // The file system module
 
 // You will pick different topics and date ranges based on your
 // interests and the contents of the prize.json file
-var catDates = [{
+let catDates = [{
         topic: "physics",
         start: 1926,
         end: 1954,
@@ -51,12 +51,12 @@ nunjucks.configure('views', {
 });
 
 // Process prizes.json to get only information of interest
-var prizeArray = prizesJSON.prizes;
-for (var catDate of catDates) {
+let prizeArray = prizesJSON.prizes;
+for (let catDate of catDates) {
     
     // Create filtered versions of the prize array for rendering.
     // Recommend using JavaScript array methods like *filter*, etc...
-    var prizeInfoArray = prizesJSON.prizes.filter(function(prize) {
+    let prizeInfoArray = prizesJSON.prizes.filter(function(prize) {
         if(parseInt(prize.year,10) >= catDate.start && parseInt(prize.year,10) <= catDate.end && prize.category === catDate.topic)
         {
             return true;
@@ -72,7 +72,7 @@ for (var catDate of catDates) {
                      "start":catDate.start,
                      "end":catDate.end};
                      
-    var outString = nunjucks.render('prizes.njk', prizeInfo);
+    let outString = nunjucks.render('prizes.njk', prizeInfo);
     
     // Write the file
     fs.writeFileSync('./output/' + catDate.fname, outString);

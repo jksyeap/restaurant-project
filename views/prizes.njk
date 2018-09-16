@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Nobel Prizes in something</title>
+  <title>Nobel Prizes in {{category}}</title>
   <link rel="stylesheet" href="prizes.css">
   <!-- Student edition, for homework purposes -->
 </head>
@@ -25,6 +25,13 @@
         </tr></thead>
     <tbody>
 <!-- Generate the table here. -->
+      {% for entry in prizes %}
+      <tr>
+        <td>{{entry.year}}</td>
+        <td>{{entry.laureates[0].firstname}} {{entry.laureates[0].surname}}</td>
+        <td>{{entry.laureates[0].motivation}}</td>
+      </tr>
+      {% endfor %}
     </tbody>
       </table>
   </main>
