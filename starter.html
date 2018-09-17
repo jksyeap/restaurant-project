@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.css">
+    <title>Tony Pepperoni's Food Shack</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!--<a class="navbar-brand" href="#">Navbar</a>-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="starter.html">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#">Catering</a>
+          <a class="nav-item nav-link" href="#">About Us</a>
+          <a class="nav-item nav-link" href="#">Reviews</a>
+        </div>
+      </div>
+    </nav>
+        
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+          <h1 class="text-center">Tony Pepperoni's Food Shack</h1>
+          <h2 class="text-center">612 Wharf Avenue</h2>
+          <figure class="text-center">
+            <img src="restaurant1.jpg" alt="Restaurant Location" class="figure-img rounded">
+          </figure>
+          <h3 class="text-center">Monday to Saturday 10am - 8pm</h3>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8" id="menu">
+          <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#PizzaPasta" aria-expanded="false" aria-controls="PizzaPasta">
+              Pizzas and Pasta
+            </button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Burgers" aria-expanded="false" aria-controls="Burgers">
+              Burgers
+            </button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#AsianFood" aria-expanded="false" aria-controls="AsianFood">
+              Asian Food
+            </button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#IceCream" aria-expanded="false" aria-controls="IceCream">
+              Ice Cream
+            </button>
+          </p>
+          <div class="collapse" id="PizzaPasta" data-parent="#menu">
+            <div class="card card-body">
+              <ul class="list-group">
+                <li class="list-group-item">Cheese and Thank You (Cheese Pizza)</li>
+                <li class="list-group-item">Gimme Olive Your Stuff (Olive and Mushroom Pizza)</li>
+                <li class="list-group-item">The Ham of the House (Ham and Pineapple Pizza)</li>
+                <li class="list-group-item">Fettuccine in a Bottle (Fettuccine with Meatballs)</li>
+                <li class="list-group-item">Tony Pepperoni's Macaroni (Macaroni and Cheese)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="collapse" id="Burgers" data-parent="#menu">
+            <div class="card card-body">
+              <ul class="list-group">
+                <li class="list-group-item">Too Many Food Punions (Burger with Onion Rings)</li>
+                <li class="list-group-item">Hard Guac Cafe (Guacamole Burger)</li>
+                <li class="list-group-item">The Way You Make Me Peel (Burger with Grilled Onions)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="collapse" id="AsianFood" data-parent="#menu">
+            <div class="card card-body">
+              <ul class="list-group">
+                <li class="list-group-item">Nasi Lemak (Coconut Rice with Chili and Anchovies)</li>
+                <li class="list-group-item">Roti Canai (Indian Flatbread with Fish Curry)</li>
+                <li class="list-group-item">Shoyu Ramen (Ramen with Soy Sauce)</li>
+                <li class="list-group-item">Xiao Long Bao (Dumpling with Soup Inside)</li>
+                <li class="list-group-item">Kaya Toast (Toast with Sweet Jam)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="collapse" id="IceCream" data-parent="#menu">
+            <div class="card card-body">
+              <ul class="list-group">
+                <li class="list-group-item">Get in the Van-illa (Vanilla Ice Cream)</li>
+                <li class="list-group-item">Feelin' Rummy (Rum Ice Cream)</li>
+                <li class="list-group-item">/root (Root Beer Float)</li>
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
+    <!-- jQuery first, then the bootstrap bundle that inclues Popper -->
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="bootstrap.bundle.js" ></script>
+  </body>
+</html>
