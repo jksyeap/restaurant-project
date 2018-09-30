@@ -22,67 +22,31 @@
     <div class="col-8 text-center" id="menu">
       <h4 class="text-center">Menu</h4>
       <p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#PizzaPasta" aria-expanded="false" aria-controls="PizzaPasta">
-          Pizzas and Pasta
+        {% for object in menu.foodCats %}
+        {% for key, value in object %}
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{key|replace(" ","")}}" aria-expanded="false" aria-controls="#{{key|replace(" ","")}}">
+          {{key}}
         </button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#Burgers" aria-expanded="false" aria-controls="Burgers">
-          Burgers
-        </button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#AsianFood" aria-expanded="false" aria-controls="AsianFood">
-          Asian Food
-        </button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#IceCream" aria-expanded="false" aria-controls="IceCream">
-          Ice Cream
-        </button>
+        {% endfor %}
+        {% endfor %}
       </p>
-      <div class="collapse" id="PizzaPasta" data-parent="#menu">
+
+      {% for i in range(0,4) %}
+      {% for key, value in menu.foodCats[i] %}
+      <div class="collapse" id="{{key|replace(" ","")}}" data-parent="#menu">
         <div class="card card-body">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cheese and Thank You (Cheese Pizza)</li>
-            <li class="list-group-item">Gimme Olive Your Stuff (Olive and Mushroom Pizza)</li>
-            <li class="list-group-item">The Ham of the House (Ham and Pineapple Pizza)</li>
-            <li class="list-group-item">Fettuccine in a Bottle (Fettuccine with Meatballs)</li>
-            <li class="list-group-item">Tony Pepperoni's Macaroni (Macaroni and Cheese)</li>
+            {% for item in value %}
+            <li class="list-group-item">{{item.name}} ({{item.description}}) - {{item.price}}</li>
+            {% endfor %}
           </ul>
-          <figure><img src="mac.jpg" alt="Mac and Cheese" class="figure-img rounded"><figcaption class="text-center"><em>Tony Pepperoni's Macaroni</em></figcaption></figure>
+          <figure><img src="../{{pics.pictures[i].src}}" alt="{{pics.pictures[i].alt}}" class="figure-img rounded"><figcaption class="text-center"><em>{{pics.pictures[i].caption}}</em></figcaption></figure>
         </div>
       </div>
+      {% endfor %}
+      {% endfor %}
       
-      <div class="collapse" id="Burgers" data-parent="#menu">
-        <div class="card card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Too Many Food Punions (Burger with Onion Rings)</li>
-            <li class="list-group-item">Hard Guac Cafe (Guacamole Burger)</li>
-            <li class="list-group-item">The Way You Make Me Peel (Burger with Grilled Onions)</li>
-          </ul>
-          <figure><img src="burger.jpg" alt="Burger with Onion Rings" class="figure-img rounded"><figcaption class="text-center"><em>Too Many Food Punions</em></figcaption></figure>
-        </div>
-      </div>
-      
-      <div class="collapse" id="AsianFood" data-parent="#menu">
-        <div class="card card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Nasi Lemak (Coconut Rice with Chili and Anchovies)</li>
-            <li class="list-group-item">Roti Canai (Indian Flatbread with Fish Curry)</li>
-            <li class="list-group-item">Shoyu Ramen (Ramen with Soy Sauce)</li>
-            <li class="list-group-item">Xiao Long Bao (Dumpling with Soup Inside)</li>
-            <li class="list-group-item">Kaya Toast (Toast with Sweet Jam)</li>
-          </ul>
-          <figure><img src="nasi_lemak.jpg" alt="Nasi Lemak" class="figure-img rounded"><figcaption class="text-center"><em>Nasi Lemak</em></figcaption></figure>
-        </div>
-      </div>
-      
-      <div class="collapse" id="IceCream" data-parent="#menu">
-        <div class="card card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Get in the Van-illa (Vanilla Ice Cream)</li>
-            <li class="list-group-item">Feelin' Rummy (Rum Ice Cream)</li>
-            <li class="list-group-item">/root (Root Beer Float)</li>
-          </ul>
-          <figure><img src="rbfloat.jpg" alt="Root Beer Float" class="figure-img rounded"><figcaption class="text-center"><em>/root</em></figcaption></figure>
-        </div>
-      </div>
-      
+
     </div>
     <div class="col-2"></div>
   </div>

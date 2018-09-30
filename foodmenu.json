@@ -23,7 +23,7 @@
   
   {"Ice Cream": [
     {"name":"Get in the Van-illa","price":"$3.50","description":"Vanilla Ice Cream"},
-    {"name":"Feelin' Rummy","price":"$3.75","description","Rum Ice Cream"},
+    {"name":"Feelin' Rummy","price":"$3.75","description":"Rum Ice Cream"},
     {"name":"/root","price":"$3.75","description":"Root Beer Float"}
   ]}
 ]}
