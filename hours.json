@@ -1,3 +1,4 @@
 {
-  "hours":"Monday to Friday 10am - 8pm\nSaturday to Sunday 10am - 6pm\n"
+  "weekdays":"Monday to Friday 10am - 8pm",
+  "weekends":"Saturday to Sunday 10am - 6pm"
 }
