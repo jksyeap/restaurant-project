@@ -1,0 +1,20 @@
+<h1 id="question-1">Question 1</h1>
+<h2 id="-a-simple-response">(a) Simple Response</h2>
+<p>Output for a request to <a href="http://www.grotto-networking.com">http://www.grotto-networking.com</a>:<br>Status: OK<br>Status code: 200<br>request: {&quot;uri&quot;:{&quot;protocol&quot;:&quot;http:&quot;,&quot;slashes&quot;:true,&quot;auth&quot;:null,&quot;host&quot;:&quot;<a href="http://www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/patents.html&quot;,&quot;path&quot;:&quot;/patents.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/patents.html&quot;%7D,&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:%7B%7D%7D">www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/patents.html&quot;,&quot;path&quot;:&quot;/patents.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/patents.html&quot;},&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:{}}</a><br>HTTP version: 1.1<br>trailers: {}<br>server = nginx<br>date = Fri, 05 Oct 2018 23:31:15 GMT<br>content-type = text/html<br>content-length = 21853<br>connection = close<br>vary = Accept-Encoding<br>last-modified = Tue, 14 Aug 2018 16:37:42 GMT<br>etag = &quot;555d-57367d42f910c&quot;<br>accept-ranges = bytes<br>body size: 21853  </p>
+<pre><code>// loop for printing response.headers object
+for(let header in response.headers)
+  console.log(header + &quot; = &quot; + response.headers[header]);
+
+// changed request to the patents page
+request.get(&quot;http://www.grotto-networking.com/patents.html&quot;,
+    function(error, response, body){
+    if (error) {
+        console.log(&#39;error:&#39;, error);
+        return;
+    };
+    lookAtResponse(response);
+    lookAtBody(body);
+    console.log(&quot;\n\n\n&quot;);
+});</code></pre><h2 id="-b-bad-response-i">(b) Bad Response I</h2>
+<p>Status: Not Found<br>Status code: 404<br>request: {&quot;uri&quot;:{&quot;protocol&quot;:&quot;http:&quot;,&quot;slashes&quot;:true,&quot;auth&quot;:null,&quot;host&quot;:&quot;<a href="http://www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/hiClass.html&quot;,&quot;path&quot;:&quot;/hiClass.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/hiClass.html&quot;%7D,&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:%7B%7D%7D">www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/hiClass.html&quot;,&quot;path&quot;:&quot;/hiClass.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/hiClass.html&quot;},&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:{}}</a><br>HTTP version: 1.1<br>trailers: {}<br>server = nginx<br>date = Fri, 05 Oct 2018 23:40:34 GMT<br>content-type = text/html; charset=iso-8859-1<br>content-length = 210<br>connection = close<br>vary = Accept-Encoding<br>body size: 210  </p>
+<p>This is the expected code (404) for a page that doesn&#39;t exist</p>
