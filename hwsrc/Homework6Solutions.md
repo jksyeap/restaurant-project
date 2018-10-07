@@ -58,3 +58,33 @@ body size: 210
 This is the expected code (404) for a page that doesn't exist
 
 ## (c) Bad Response II
+
+## (d) JSON Response
+content-type header says it is application/json  
+In entry 35 the distance was 28.3  
+The whole output for this request is:  
+
+Status: OK  
+Status code: 200  
+request: {"uri":{"protocol":"https:","slashes":true,"auth":null,"host":"windsurf.grotto-networking.com","port":443,"hostname":"windsurf.grotto-networking.com","hash":null,"search":null,"query":null,"pathname":"/data/logs/windEvents2018.json","path":"/data/logs/windEvents2018.json","href":"https://windsurf.grotto-networking.com/data/logs/windEvents2018.json"},"method":"GET","headers":{}}  
+HTTP version: 1.1  
+trailers: {}  
+server = nginx  
+date = Sun, 07 Oct 2018 02:08:20 GMT  
+content-type = application/json  
+content-length = 32611  
+connection = close  
+last-modified = Sat, 06 Oct 2018 17:30:30 GMT  
+etag = "7f63-57792bea261ee"  
+accept-ranges = bytes  
+body size: 32611  
+{ start: 1530046491,  
+  max2sec: 23.75,  
+  board: 'FoilT-80',  
+  max10sec: 23.29,  
+  desc: 'Started reasonably windy then dropped when I hit the water.  Was able to get out and up with some slogging in between tacks.  Found good wind up near Treasure Island. Had two trips up. Big waves. Under powered at times but overall good day.',  
+  sail: '6.6',  
+  location: 'Berkeley',  
+  distance: 28.3,  
+  end: 1530055460 }  
+  
