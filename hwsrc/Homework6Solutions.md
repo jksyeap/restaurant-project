@@ -89,10 +89,15 @@ body size: 32611
   end: 1530055460 }  
   
 # Question 2
+![Image](../hwpics/question2a.png)
+---
+![Image](../hwpics/question2b.png)
+---
+![Image](../hwpics/question2c.png)
 
 # Question 3
-![Image](../question3a.png)
-***
-![Image](../question3b.png)
-***
-![Image](../question3c.png)
+![Image](../hwpics/question3a.png)
+---
+![Image](../hwpics/question3b.png)
+---
+![Image](../hwpics/question3c.png)
