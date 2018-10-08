@@ -12,8 +12,8 @@ nunjucks.configure('templates', {
 // The population data
 const populations = require('./country-by-population.json');
 
-let host = '0.0.0.0'; // Choose a different loopback address
-let port = '8080'; // Last digits of your NetID
+let host = '127.3.2.1'; // Choose a different loopback address
+let port = '5839'; // Last digits of your NetID
 let myName = 'Justin Yeap'; // Change this too.
 
 let info = {host: host, port: port, name: myName}
