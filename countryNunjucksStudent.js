@@ -25,16 +25,24 @@ app.get('/', function (req, res) {
 
 
 app.get('/country/:cname', function (req, res) {
-    let country = req.params.cname;
+    let country = req.params.cname.toLowerCase();
     let renderInfo = {};
     renderInfo["found"] = false;
     let target = populations.find(function(element) {
-      return element["country"] == country;
+      return element["country"].toLowerCase() == country;
     })
     if(target != undefined) {
       renderInfo["found"] = true;
       renderInfo["country"] = target["country"];
       renderInfo["population"] = target["population"];
+    }
+    else {
+        let start = country.slice(0,2).toLowerCase();
+        let closeMatches = populations.filter(function(element) {
+            return element["country"].toLowerCase().startsWith(start);
+        });
+        renderInfo["closeMatches"] = closeMatches;
+        renderInfo["country"] = country;
     }
     // Populate render info here with the stuff you
     // Need in the template.  Hint use Javascript array

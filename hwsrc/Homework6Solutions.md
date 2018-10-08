@@ -88,3 +88,11 @@ body size: 32611
   distance: 28.3,  
   end: 1530055460 }  
   
+# Question 2
+
+# Question 3
+![Image](../question3a.png)
+***
+![Image](../question3b.png)
+***
+![Image](../question3c.png)
