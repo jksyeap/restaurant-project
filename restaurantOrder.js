@@ -42,7 +42,7 @@ app.post('/web_order', urlencodedParser, function(req, res) {
             let temp = {};
             temp["name"] = item;
             temp["quantity"] = info[item];
-            temp["itemTotal"] = (raw_menu[item] * parseInt(info[item]));
+            temp["itemTotal"] = (raw_menu[item] * info[item]);
             order.items.push(temp);
         }
     }
@@ -58,8 +58,8 @@ app.post('/web_order', urlencodedParser, function(req, res) {
     order.tax = order.tax.toFixed(2);
     order.grandTotal = order.grandTotal.toFixed(2);
 
-    console.log(JSON.stringify(order));
-    //res.render('TakeOutConfirmation.html', order);
+    //console.log(JSON.stringify(order));
+    res.render('TakeOutConfirmation.html', order);
 });
 
 const host = '0.0.0.0';
