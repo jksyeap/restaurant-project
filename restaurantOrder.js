@@ -23,25 +23,44 @@ app.get('/', function(req, res) {
 // What method should you use? Hint look at the order Form.
 // What URL should you listen on?
 // Do you need to process the body in any way?
-// app.?method?('/?processing_url?', ?some_kind_of_body_parser?, function(req, res) {
+app.post('/web_order', urlencodedParser, function(req, res) {
 
 
 //     Below is some code that I used to simplify the menu to make it
 //      easier to look up prices. You don't have to use this.
-//     let raw_menu = {};
-//     for (let cat in foodMenu.menu) {
-//         for (let item of foodMenu.menu[cat]) {
-//             raw_menu[item.name] = item.price;
-//         }
-//     }
-//     // console.log(JSON.stringify(raw_menu));  // for debugging
+    let raw_menu = {};
+    for (let cat in foodMenu.menu) {
+        for (let item of foodMenu.menu[cat]) {
+            raw_menu[item.name] = item.price;
+        }
+    }
+    //console.log(JSON.stringify(raw_menu));  // for debugging
+    let info = req.body;
+    let order = {"items":[],"subtotal":0.0,"tax":0.0,"grandTotal":0.0};
+    for(let item in info) {
+        if((info[item]) > 0) {
+            let temp = {};
+            temp["name"] = item;
+            temp["quantity"] = info[item];
+            temp["itemTotal"] = (raw_menu[item] * parseInt(info[item]));
+            order.items.push(temp);
+        }
+    }
+    for(let entry of order.items) {
+        order.subtotal += entry.itemTotal;
+        entry.itemTotal = entry.itemTotal.toFixed(2);
+    }
+    order.subtotal = order.subtotal;
+    order.tax = (0.0725 * order.subtotal);
+    order.grandTotal = (order.tax + order.subtotal);
+    
+    order.subtotal = order.subtotal.toFixed(2);
+    order.tax = order.tax.toFixed(2);
+    order.grandTotal = order.grandTotal.toFixed(2);
 
-/*  You need to process the body (customer order here), compute item totals
-    compute order subtotal, compute tax, and compute total.
- */
-    // I'd use a template to render the order specific response.
-//     res.render('TakeOutConfirmation.html', order);
-// });
+    console.log(JSON.stringify(order));
+    //res.render('TakeOutConfirmation.html', order);
+});
 
 const host = '0.0.0.0';
 const port = '8080';
