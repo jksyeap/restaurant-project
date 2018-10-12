@@ -19,7 +19,23 @@ request.get(&quot;http://www.grotto-networking.com/patents.html&quot;,
 <p>Status: Not Found<br>Status code: 404<br>request: {&quot;uri&quot;:{&quot;protocol&quot;:&quot;http:&quot;,&quot;slashes&quot;:true,&quot;auth&quot;:null,&quot;host&quot;:&quot;<a href="http://www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/hiClass.html&quot;,&quot;path&quot;:&quot;/hiClass.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/hiClass.html&quot;%7D,&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:%7B%7D%7D">www.grotto-networking.com&quot;,&quot;port&quot;:80,&quot;hostname&quot;:&quot;www.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/hiClass.html&quot;,&quot;path&quot;:&quot;/hiClass.html&quot;,&quot;href&quot;:&quot;http://www.grotto-networking.com/hiClass.html&quot;},&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:{}}</a><br>HTTP version: 1.1<br>trailers: {}<br>server = nginx<br>date = Fri, 05 Oct 2018 23:40:34 GMT<br>content-type = text/html; charset=iso-8859-1<br>content-length = 210<br>connection = close<br>vary = Accept-Encoding<br>body size: 210  </p>
 <p>This is the expected code (404) for a page that doesn&#39;t exist</p>
 <h2 id="-c-bad-response-ii">(c) Bad Response II</h2>
-<h2 id="-d-json-response">(d) JSON Response</h2>
+<p>It took 20 seconds for the request to timeout  </p>
+<pre><code>// changed timeout to 2 seconds
+var options = {
+    url:&quot;http://www.grotto-networking.com:44/patents.html&quot;,
+    timeout:2000
+}
+
+request.get(options,
+   function(error, response, body){
+   if (error) {
+       console.log(&#39;error:&#39;, error);
+       return;
+   };
+   lookAtResponse(response);
+   lookAtBody(body);
+   console.log(&quot;\n\n\n&quot;);
+});</code></pre><h2 id="-d-json-response">(d) JSON Response</h2>
 <p>content-type header says it is application/json<br>In entry 35 the distance was 28.3<br>The whole output for this request is:  </p>
 <p>Status: OK<br>Status code: 200<br>request: {&quot;uri&quot;:{&quot;protocol&quot;:&quot;https:&quot;,&quot;slashes&quot;:true,&quot;auth&quot;:null,&quot;host&quot;:&quot;windsurf.grotto-networking.com&quot;,&quot;port&quot;:443,&quot;hostname&quot;:&quot;windsurf.grotto-networking.com&quot;,&quot;hash&quot;:null,&quot;search&quot;:null,&quot;query&quot;:null,&quot;pathname&quot;:&quot;/data/logs/windEvents2018.json&quot;,&quot;path&quot;:&quot;/data/logs/windEvents2018.json&quot;,&quot;href&quot;:&quot;<a href="https://windsurf.grotto-networking.com/data/logs/windEvents2018.json&quot;%7D,&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:%7B%7D%7D">https://windsurf.grotto-networking.com/data/logs/windEvents2018.json&quot;},&quot;method&quot;:&quot;GET&quot;,&quot;headers&quot;:{}}</a><br>HTTP version: 1.1<br>trailers: {}<br>server = nginx<br>date = Sun, 07 Oct 2018 02:08:20 GMT<br>content-type = application/json<br>content-length = 32611<br>connection = close<br>last-modified = Sat, 06 Oct 2018 17:30:30 GMT<br>etag = &quot;7f63-57792bea261ee&quot;<br>accept-ranges = bytes<br>body size: 32611<br>{ start: 1530046491,<br>  max2sec: 23.75,<br>  board: &#39;FoilT-80&#39;,<br>  max10sec: 23.29,<br>  desc: &#39;Started reasonably windy then dropped when I hit the water.  Was able to get out and up with some slogging in between tacks.  Found good wind up near Treasure Island. Had two trips up. Big waves. Under powered at times but overall good day.&#39;,<br>  sail: &#39;6.6&#39;,<br>  location: &#39;Berkeley&#39;,<br>  distance: 28.3,<br>  end: 1530055460 }  </p>
 <h1 id="question-2">Question 2</h1>
@@ -30,3 +46,6 @@ request.get(&quot;http://www.grotto-networking.com/patents.html&quot;,
 <h2 id="image"><img src="../hwpics/question3a.png" alt="Image"></h2>
 <h2 id="image"><img src="../hwpics/question3b.png" alt="Image"></h2>
 <p><img src="../hwpics/question3c.png" alt="Image"></p>
+<h1 id="question-4">Question 4</h1>
+<h2 id="image"><img src="../hwpics/question4a.png" alt="Image"></h2>
+<p><img src="../hwpics/question4b.png" alt="Image"></p>

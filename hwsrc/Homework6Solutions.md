@@ -58,6 +58,25 @@ body size: 210
 This is the expected code (404) for a page that doesn't exist
 
 ## (c) Bad Response II
+It took 20 seconds for the request to timeout  
+```
+// changed timeout to 2 seconds
+var options = {
+    url:"http://www.grotto-networking.com:44/patents.html",
+    timeout:2000
+}
+
+request.get(options,
+   function(error, response, body){
+   if (error) {
+       console.log('error:', error);
+       return;
+   };
+   lookAtResponse(response);
+   lookAtBody(body);
+   console.log("\n\n\n");
+});
+```
 
 ## (d) JSON Response
 content-type header says it is application/json  
@@ -101,3 +120,8 @@ body size: 32611
 ![Image](../hwpics/question3b.png)
 ---
 ![Image](../hwpics/question3c.png)
+
+# Question 4
+![Image](../hwpics/question4a.png)
+---
+![Image](../hwpics/question4b.png)

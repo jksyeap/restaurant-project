@@ -62,8 +62,8 @@ app.post('/web_order', urlencodedParser, function(req, res) {
     res.render('TakeOutConfirmation.html', order);
 });
 
-const host = '0.0.0.0';
-const port = '8080';
+const host = '127.3.2.1';
+const port = '5839';
 app.listen(port, host, function () {
     console.log("restaurantOrder.js app listening on IPv4: " + host +
 	":" + port);

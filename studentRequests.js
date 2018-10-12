@@ -41,16 +41,32 @@ request.get("http://www.grotto-networking.com/hiClass.html",
     console.log("\n\n\n");
 });
 
-// request.get("http://www.grotto-networking.com:44/patents.html",
-//     function(error, response, body){
-//     if (error) {
-//         console.log('error:', error);
-//         return;
-//     };
-//     lookAtResponse(response);
-//     lookAtBody(body);
-//     console.log("\n\n\n");
-// });
+request.get("http://www.grotto-networking.com:44/patents.html",
+    function(error, response, body){
+    if (error) {
+        console.log('error:', error);
+        return;
+    };
+    lookAtResponse(response);
+    lookAtBody(body);
+    console.log("\n\n\n");
+});
+
+var options = {
+    url:"http://www.grotto-networking.com:44/patents.html",
+    timeout:2000
+}
+
+request.get(options,
+    function(error, response, body){
+    if (error) {
+        console.log('error:', error);
+        return;
+    };
+    lookAtResponse(response);
+    lookAtBody(body);
+    console.log("\n\n\n");
+});
 
 request.get("https://windsurf.grotto-networking.com/data/logs/windEvents2018.json",
     function(error, response, body){
