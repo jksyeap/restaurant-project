@@ -9,7 +9,7 @@
       <h1 class="text-center">{{title}}</h1>
       <h2 class="text-center">{{address}}</h2>
       <figure class="text-center">
-        <img src="../restaurant1.jpg" alt="Restaurant Location" class="figure-img rounded">
+        <img src="../restaurant1.jpg" alt="Restaurant Location" class="figure-img rounded" id="beachside">
       </figure>
       <h3 class="text-center">{{hours.weekdays}}</h3>
       <h3 class="text-center">{{hours.weekends}}</h3>
@@ -40,7 +40,7 @@
             <li class="list-group-item">{{item.name}} ({{item.description}}) - {{item.price}}</li>
             {% endfor %}
           </ul>
-          <figure><img src="../{{pics.pictures[i].src}}" alt="{{pics.pictures[i].alt}}" class="figure-img rounded"><figcaption class="text-center"><em>{{pics.pictures[i].caption}}</em></figcaption></figure>
+          <figure><img src="../{{pics.pictures[i].src}}" alt="{{pics.pictures[i].alt}}" class="figure-img rounded foodPic"><figcaption class="text-center"><em>{{pics.pictures[i].caption}}</em></figcaption></figure>
         </div>
       </div>
       {% endfor %}
