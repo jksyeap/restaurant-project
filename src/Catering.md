@@ -17,7 +17,7 @@ Ask about our catering services! We offer our great menu for:
 * And any other gathering of two or more people
 
 Our prices are negotiated on a case by case basis. Prices mostly depend on how 
-many peopleare expected to be attending. Please give us at least one week 
+many people are expected to be attending. Please give us at least one week 
 advance notice.
 
 We also offer a vegetarian option if so desired. 
