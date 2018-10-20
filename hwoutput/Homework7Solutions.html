@@ -1,0 +1,94 @@
+<h1 id="question-1">Question 1</h1>
+<h2 id="-a-asynchronous-javascript">(a) Asynchronous Javascript</h2>
+<p>The output will be:</p>
+<p>myTime = 1, elapsedTime = 1.0<br>myTime = 2, elapsedTime = 1.0<br>myTime = 3, elapsedTime = 1.0<br>myTime = 4, elapsedTime = 1.0  </p>
+<p>This is because the four calls to setTimeout will only add four instances of<br>advanceTime to the event queue at nearly the same time, without any pause in<br>between. Then after waiting for one second, each instance of advanceTime runs<br>one after another, quickly enough that it looks like they all ran at the same<br>time.    </p>
+<h2 id="-b-promises-promises">(b) Promises, Promises</h2>
+<p>The output for this code was:</p>
+<p>myTime = 1, elapsedTime = 0<br>myTime = 2, elapsedTime = 0.002<br>myTime = 3, elapsedTime = 0.002<br>myTime = 4, elapsedTime = 0.002  </p>
+<p>This still doesn&#39;t work correctly because the elapsed time is not increasing<br>by 1 second like it is supposed to. The mistake here is that the promises were<br>not chained in any way. You just have four calls to advanceTime that will run<br>consecutively. Each advanceTime instance returns a promise, but the next<br>instance of advanceTime is not waiting for that promise to resolve. You could<br>fix this by chaining:  </p>
+<pre><code>oneSecond()
+  .then(advanceTime)
+  .then(advanceTime)
+  .then(advanceTime)
+  .then(advanceTime);</code></pre><h2 id="-c-requests-in-series-with-promises">(c) Requests in Series with Promises</h2>
+<p>The modified code is:</p>
+<pre><code>const rp = require(&#39;request-promise-native&#39;);
+let site1 = {
+    uri: &#39;https://www.youtube.com&#39;,
+    method: &#39;HEAD&#39;, // What does this do?
+    resolveWithFullResponse: true
+};
+
+let site2 = {
+    uri: &#39;https://www.bbc.com/news&#39;,
+    method: &#39;HEAD&#39;,
+    resolveWithFullResponse: true
+};
+
+let site3 = {
+    uri: &#39;https://www.nst.com.my&#39;,
+    method: &#39;HEAD&#39;,
+    resolveWithFullResponse: true
+};
+
+let start = new Date();
+rp(site1).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    console.log(`YouTube status: ${res.statusCode}, time: ${time}`);
+    return rp(site2);
+}).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    console.log(`BBC News status: ${res.statusCode}, time: ${time}`);
+    return rp(site3);
+}).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    console.log(`New Straits Times status: ${res.statusCode}, time: ${time}`);
+})
+console.log(&quot;Starting my web requests:&quot;);</code></pre><p>The output is: </p>
+<p>Starting my web requests:<br>YouTube status: 200, time: 1.254<br>BBC News status: 200, time: 1.31<br>New Straits Times status: 200, time: 1.731  </p>
+<p>The main advantage of using promises in this case is that you can guarantee the<br>order in which these sites are visited. </p>
+<h2 id="-d-requests-in-parallel-with-promises">(d) Requests in Parallel with Promises</h2>
+<p>The modified code is:</p>
+<pre><code>const rp = require(&#39;request-promise-native&#39;);
+let site1 = {
+    uri: &#39;https://www.youtube.com&#39;,
+    method: &#39;HEAD&#39;, // What does this do?
+    resolveWithFullResponse: true
+};
+
+let site2 = {
+    uri: &#39;https://www.bbc.com/news&#39;,
+    method: &#39;HEAD&#39;,
+    resolveWithFullResponse: true
+};
+
+let site3 = {
+    uri: &#39;https://www.nst.com.my&#39;,
+    method: &#39;HEAD&#39;,
+    resolveWithFullResponse: true
+};
+
+let start = new Date();
+let p1 = rp(site1).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    return console.log(`YouTube status: ${res.statusCode}, time: ${time}`);});
+
+let p2 = rp(site2).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    return console.log(`BBC News status: ${res.statusCode}, time: ${time}`);
+});
+
+let p3 = rp(site3).then(res =&gt; {
+    let time = (new Date() - start)/1000;
+    return console.log(`New Straits Times status: ${res.statusCode}, time: ${time}`);
+});
+
+console.log(&quot;Starting my web requests:&quot;);
+Promise.all([p1, p2, p3]).then(x=&gt;{
+    console.log(&quot;All Finished&quot;);
+});</code></pre><p>The output is:</p>
+<p>Starting my web requests:<br>BBC News status: 200, time: 0.143<br>New Straits Times status: 200, time: 0.44<br>YouTube status: 200, time: 1.517<br>All Finished  </p>
+<p>The advantage here is that we might save some time running requests in parallel<br>instead of having to wait for each request to finish before running the next.<br>But now the order is not guaranteed. </p>
+<h1 id="question-2">Question 2</h1>
+<h2 id="-a-json-server-and-database">(a) JSON Server and Database</h2>
