@@ -148,35 +148,58 @@ But now the order is not guaranteed.
 
 ## (a) JSON Server and Database
 ```
-app.put('/register', urlencodedParser, function(req,res) {
+app.put('/register', jsonencodedParser, function(req,res) {
   let user = req.body;
   db.find({"name": user.name}, function(err,docs) {
-    if(err) {
-      console.log("Something is wrong");
-    }
-    else {
+    if(err) 
+      {console.log("database error");}
+    else 
+    {
       let response = {};
       if(docs.length == 0)
       {
         db.insert(user);
-        response.registration = "succeeded"
+        response.registration = "succeeded";
         response.user = user.name;
         response.reason = undefined;
-        res.send(response);
+        res.send(JSON.stringify(response));
       }
       else
       {
         response.registration = "failed";
         response.user = user.name;
         response.reason = "user already exists";
-        res.send(response);
+        res.send(JSON.stringify(response));
       }
     }
-  })
-})
+  });
+});
 ```
 
 ## (b) Test the "/register" path
+Code:  
+```
+request.put({uri:"http://0.0.0.0:8080/register", json:true, body:{"name":"Owen", "nickname":"Vanilla"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:"http://0.0.0.0:8080/register", json:true, body:{"name":"Steve", "nickname":"Outback"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:"http://0.0.0.0:8080/register", json:true, body:{"name":"Pack", "nickname":"Half-Pint"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:"http://0.0.0.0:8080/register", json:true, body:{"name":"Danny", "nickname":"Doughboy"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:"http://0.0.0.0:8080/register", json:true, body:{"name":"Karen", "nickname":"Six Feet"}}, function(error,response,body) {
+  console.log(body);
+});
+```
+
 First run:  
 {"registration":"succeeded","user":"Owen"}  
 {"registration":"succeeded","user":"Steve"}  
@@ -190,3 +213,87 @@ Second run:
 {"registration":"failed","user":"Pack","reason":"user already exists"}  
 {"registration":"failed","user":"Danny","reason":"user already exists"}  
 {"registration":"failed","user":"Karen","reason":"user already exists"}  
+
+## (c) Add an "/allUsers" path and functionality
+```
+app.get('/allUsers', function(req,res) {
+  let time = new Date();
+  let response = {"date":time.toString()};
+  db.find({}, function(err,docs) {
+    if(err) 
+      {console.log("database error");}
+    else
+    {
+      let names = [];
+      for(let doc of docs)
+        names.push(doc.name);
+      response.users = names;
+      res.send(JSON.stringify(response));
+    }
+  });
+});
+```
+
+## (d) Test the "/allUsers" path
+Code:  
+```
+request.get("http://0.0.0.0:8080/allUsers", function(error,response,body) {
+  console.log(body);
+})
+```
+
+Output:  
+{"date":"Mon Oct 22 2018 15:56:17 GMT-0700 (PDT)","users":["Danny","Karen","Pack","Steve","Owen"]}  
+
+## (e) Nickname interface
+```
+app.get('/nickname', jsonencodedParser, function(req,res) {
+  let query = req.body;
+  console.log(query);
+  db.find({"name": query.user}, function(err,docs) {
+    if(err) 
+      {console.log("database error");}
+    else
+    {
+      let response = {};
+      if(docs.length == 0)
+      {
+        response.user = query.user;
+        response.error = "Not Found";
+        res.send(JSON.stringify(response));
+      }
+      else
+      {
+        response.user = docs[0].name;
+        response.nickname = docs[0].nickname;
+        res.send(JSON.stringify(response));
+      }
+    }
+  });
+});
+```
+
+## (f) Test the Nickname interface
+Code:  
+```
+request.get({uri:"http://0.0.0.0:8080/nickname", json:true, body:{"user":"Karen"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.get({uri:"http://0.0.0.0:8080/nickname", json:true, body:{"user":"Danny"}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.get({uri:"http://0.0.0.0:8080/nickname", json:true, body:{"user":"Joe"}}, function(error,response,body) {
+  console.log(body);
+});
+```
+
+Output:  
+{ user: 'Karen', nickname: 'Six Feet' }  
+{ user: 'Danny', nickname: 'Doughboy' }  
+{ user: 'Joe', error: 'Not Found' }  
+
+# Question 3
+
+## (a) The Cookies Path Attribute

@@ -92,31 +92,110 @@ Promise.all([p1, p2, p3]).then(x=&gt;{
 <p>The advantage here is that we might save some time running requests in parallel<br>instead of having to wait for each request to finish before running the next.<br>But now the order is not guaranteed. </p>
 <h1 id="question-2">Question 2</h1>
 <h2 id="-a-json-server-and-database">(a) JSON Server and Database</h2>
-<pre><code>app.put(&#39;/register&#39;, urlencodedParser, function(req,res) {
+<pre><code>app.put(&#39;/register&#39;, jsonencodedParser, function(req,res) {
   let user = req.body;
   db.find({&quot;name&quot;: user.name}, function(err,docs) {
-    if(err) {
-      console.log(&quot;Something is wrong&quot;);
-    }
-    else {
+    if(err) 
+      {console.log(&quot;database error&quot;);}
+    else 
+    {
       let response = {};
       if(docs.length == 0)
       {
         db.insert(user);
-        response.registration = &quot;succeeded&quot;
+        response.registration = &quot;succeeded&quot;;
         response.user = user.name;
         response.reason = undefined;
-        res.send(response);
+        res.send(JSON.stringify(response));
       }
       else
       {
         response.registration = &quot;failed&quot;;
         response.user = user.name;
         response.reason = &quot;user already exists&quot;;
-        res.send(response);
+        res.send(JSON.stringify(response));
       }
     }
-  })
-})</code></pre><h2 id="-b-test-the-register-path">(b) Test the &quot;/register&quot; path</h2>
-<p>First run:<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Owen&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Steve&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Pack&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Danny&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Karen&quot;}  </p>
+  });
+});</code></pre><h2 id="-b-test-the-register-path">(b) Test the &quot;/register&quot; path</h2>
+<p>Code:  </p>
+<pre><code>request.put({uri:&quot;http://0.0.0.0:8080/register&quot;, json:true, body:{&quot;name&quot;:&quot;Owen&quot;, &quot;nickname&quot;:&quot;Vanilla&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:&quot;http://0.0.0.0:8080/register&quot;, json:true, body:{&quot;name&quot;:&quot;Steve&quot;, &quot;nickname&quot;:&quot;Outback&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:&quot;http://0.0.0.0:8080/register&quot;, json:true, body:{&quot;name&quot;:&quot;Pack&quot;, &quot;nickname&quot;:&quot;Half-Pint&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:&quot;http://0.0.0.0:8080/register&quot;, json:true, body:{&quot;name&quot;:&quot;Danny&quot;, &quot;nickname&quot;:&quot;Doughboy&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.put({uri:&quot;http://0.0.0.0:8080/register&quot;, json:true, body:{&quot;name&quot;:&quot;Karen&quot;, &quot;nickname&quot;:&quot;Six Feet&quot;}}, function(error,response,body) {
+  console.log(body);
+});</code></pre><p>First run:<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Owen&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Steve&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Pack&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Danny&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Karen&quot;}  </p>
 <p>Second run:<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Owen&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Steve&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Pack&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Danny&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Karen&quot;,&quot;reason&quot;:&quot;user already exists&quot;}  </p>
+<h2 id="-c-add-an-allusers-path-and-functionality">(c) Add an &quot;/allUsers&quot; path and functionality</h2>
+<pre><code>app.get(&#39;/allUsers&#39;, function(req,res) {
+  let time = new Date();
+  let response = {&quot;date&quot;:time.toString()};
+  db.find({}, function(err,docs) {
+    if(err) 
+      {console.log(&quot;database error&quot;);}
+    else
+    {
+      let names = [];
+      for(let doc of docs)
+        names.push(doc.name);
+      response.users = names;
+      res.send(JSON.stringify(response));
+    }
+  });
+});</code></pre><h2 id="-d-test-the-allusers-path">(d) Test the &quot;/allUsers&quot; path</h2>
+<p>Code:  </p>
+<pre><code>// request.get(&quot;http://0.0.0.0:8080/allUsers&quot;, function(error,response,body) {
+//   console.log(body);
+// })</code></pre><p>Output:<br>{&quot;date&quot;:&quot;Mon Oct 22 2018 15:56:17 GMT-0700 (PDT)&quot;,&quot;users&quot;:[&quot;Danny&quot;,&quot;Karen&quot;,&quot;Pack&quot;,&quot;Steve&quot;,&quot;Owen&quot;]}  </p>
+<h2 id="-e-nickname-interface">(e) Nickname interface</h2>
+<pre><code>app.get(&#39;/nickname&#39;, jsonencodedParser, function(req,res) {
+  let query = req.body;
+  console.log(query);
+  db.find({&quot;name&quot;: query.user}, function(err,docs) {
+    if(err) 
+      {console.log(&quot;database error&quot;);}
+    else
+    {
+      let response = {};
+      if(docs.length == 0)
+      {
+        response.user = query.user;
+        response.error = &quot;Not Found&quot;;
+        res.send(JSON.stringify(response));
+      }
+      else
+      {
+        response.user = docs[0].name;
+        response.nickname = docs[0].nickname;
+        res.send(JSON.stringify(response));
+      }
+    }
+  });
+});</code></pre><h2 id="-f-test-the-nickname-interface">(f) Test the Nickname interface</h2>
+<p>Code:  </p>
+<pre><code>request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quot;user&quot;:&quot;Karen&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quot;user&quot;:&quot;Danny&quot;}}, function(error,response,body) {
+  console.log(body);
+});
+
+request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quot;user&quot;:&quot;Joe&quot;}}, function(error,response,body) {
+  console.log(body);
+});</code></pre><p>Output:<br>{ user: &#39;Karen&#39;, nickname: &#39;Six Feet&#39; }<br>{ user: &#39;Danny&#39;, nickname: &#39;Doughboy&#39; }<br>{ user: &#39;Joe&#39;, error: &#39;Not Found&#39; }  </p>
+<h1 id="question-3">Question 3</h1>
+<h2 id="-a-the-cookies-path-attribute">(a) The Cookies Path Attribute</h2>
