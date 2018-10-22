@@ -92,3 +92,31 @@ Promise.all([p1, p2, p3]).then(x=&gt;{
 <p>The advantage here is that we might save some time running requests in parallel<br>instead of having to wait for each request to finish before running the next.<br>But now the order is not guaranteed. </p>
 <h1 id="question-2">Question 2</h1>
 <h2 id="-a-json-server-and-database">(a) JSON Server and Database</h2>
+<pre><code>app.put(&#39;/register&#39;, urlencodedParser, function(req,res) {
+  let user = req.body;
+  db.find({&quot;name&quot;: user.name}, function(err,docs) {
+    if(err) {
+      console.log(&quot;Something is wrong&quot;);
+    }
+    else {
+      let response = {};
+      if(docs.length == 0)
+      {
+        db.insert(user);
+        response.registration = &quot;succeeded&quot;
+        response.user = user.name;
+        response.reason = undefined;
+        res.send(response);
+      }
+      else
+      {
+        response.registration = &quot;failed&quot;;
+        response.user = user.name;
+        response.reason = &quot;user already exists&quot;;
+        res.send(response);
+      }
+    }
+  })
+})</code></pre><h2 id="-b-test-the-register-path">(b) Test the &quot;/register&quot; path</h2>
+<p>First run:<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Owen&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Steve&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Pack&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Danny&quot;}<br>{&quot;registration&quot;:&quot;succeeded&quot;,&quot;user&quot;:&quot;Karen&quot;}  </p>
+<p>Second run:<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Owen&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Steve&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Pack&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Danny&quot;,&quot;reason&quot;:&quot;user already exists&quot;}<br>{&quot;registration&quot;:&quot;failed&quot;,&quot;user&quot;:&quot;Karen&quot;,&quot;reason&quot;:&quot;user already exists&quot;}  </p>

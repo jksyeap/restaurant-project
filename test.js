@@ -1,21 +1,21 @@
-let myTime = 0.0;
-let startTime = new Date();
+const request = require('request');
 
-function oneSecond() { // Returns a promise that resolves in one second
-    return new Promise(function(resolve, reject){
-        setTimeout(()=>resolve(), 1000);
-        });
-}
+request.put("http://0.0.0.0:8080/register", {form : {"name":"Owen", "nickname":"Vanilla"}}, function(error,response,body) {
+  console.log(body);
+})
 
-function advanceTime() {
-    myTime += 1.0;
-    elapsedTime = (new Date() - startTime)/1000.0;
-    console.log(`myTime = ${myTime}, elapsedTime = ${elapsedTime}`);
-    return oneSecond(); // Returns another new one second promise
-}
+request.put("http://0.0.0.0:8080/register", {form : {"name":"Steve", "nickname":"Outback"}}, function(error,response,body) {
+  console.log(body);
+})
 
-oneSecond()
-  .then(advanceTime)
-  .then(advanceTime)
-  .then(advanceTime)
-  .then(advanceTime);
+request.put("http://0.0.0.0:8080/register", {form : {"name":"Pack", "nickname":"Half-Pint"}}, function(error,response,body) {
+  console.log(body);
+})
+
+request.put("http://0.0.0.0:8080/register", {form : {"name":"Danny", "nickname":"Doughboy"}}, function(error,response,body) {
+  console.log(body);
+})
+
+request.put("http://0.0.0.0:8080/register", {form : {"name":"Karen", "nickname":"Six Feet"}}, function(error,response,body) {
+  console.log(body);
+})

@@ -147,3 +147,46 @@ But now the order is not guaranteed.
 # Question 2
 
 ## (a) JSON Server and Database
+```
+app.put('/register', urlencodedParser, function(req,res) {
+  let user = req.body;
+  db.find({"name": user.name}, function(err,docs) {
+    if(err) {
+      console.log("Something is wrong");
+    }
+    else {
+      let response = {};
+      if(docs.length == 0)
+      {
+        db.insert(user);
+        response.registration = "succeeded"
+        response.user = user.name;
+        response.reason = undefined;
+        res.send(response);
+      }
+      else
+      {
+        response.registration = "failed";
+        response.user = user.name;
+        response.reason = "user already exists";
+        res.send(response);
+      }
+    }
+  })
+})
+```
+
+## (b) Test the "/register" path
+First run:  
+{"registration":"succeeded","user":"Owen"}  
+{"registration":"succeeded","user":"Steve"}  
+{"registration":"succeeded","user":"Pack"}  
+{"registration":"succeeded","user":"Danny"}  
+{"registration":"succeeded","user":"Karen"}  
+
+Second run:  
+{"registration":"failed","user":"Owen","reason":"user already exists"}  
+{"registration":"failed","user":"Steve","reason":"user already exists"}  
+{"registration":"failed","user":"Pack","reason":"user already exists"}  
+{"registration":"failed","user":"Danny","reason":"user already exists"}  
+{"registration":"failed","user":"Karen","reason":"user already exists"}  
