@@ -297,3 +297,34 @@ Output:
 # Question 3
 
 ## (a) The Cookies Path Attribute
+In the "/" path the three cookies are sent. In the "/" path only the firstcookie  
+is got back from the browser because it is the only one with the "/" path  
+attribute. In the the "/left" path there are two cookies received from the   
+browser: firstcookie and secondcookie. This is because they have path attributes  
+that match the url (i.e. "/" and "/left"). In the "/right" path there are also  
+only two cookies received: firstcookie and thirdcookie. Since "/" and "/right"  
+match, the cookies with these path attributes are sent to the server.  
+
+## (b) Cookies and the _Request_ Library
+Output:  
+Starting my web requests:  
+Testing cookies, "/" path, I sent: {undefined}  
+Testing cookies, "/left" path, I sent: {undefined}  
+Testing cookies, "/right" path, I sent: {undefined}  
+
+These results are different than part (a). This is because in _request_ cookies  
+are not saved by default so no cookies are sent back to the server. In order to  
+use cookies they need to be saved in a "jar" and the subsequent request calls  
+need to be nested in the first call so that they share the same jar (I think).
+
+## (c) Using Cookies with the _Request_ Library
+Output:  
+Starting my web requests:  
+Testing cookies, "/" path, I sent: {undefined}  
+Testing cookies, "/left" path, I sent: {secondcookie=leftcookie; firstcookie=midcookie}  
+Testing cookies, "/right" path, I sent: {thirdcookie=rightcookie; firstcookie=midcookie}  
+Testing cookies, "/" path, I sent: {firstcookie=midcookie}  
+
+# Question 4
+
+## (a) Password Authentication
