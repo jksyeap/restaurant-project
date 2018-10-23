@@ -308,9 +308,9 @@ match, the cookies with these path attributes are sent to the server.
 ## (b) Cookies and the _Request_ Library
 Output:  
 Starting my web requests:  
-Testing cookies, "/" path, I sent: {undefined}  
-Testing cookies, "/left" path, I sent: {undefined}  
-Testing cookies, "/right" path, I sent: {undefined}  
+Testing cookies, "/" path, client sent: {undefined}  
+Testing cookies, "/left" path, client sent: {undefined}  
+Testing cookies, "/right" path, client sent: {undefined}  
 
 These results are different than part (a). This is because in _request_ cookies  
 are not saved by default so no cookies are sent back to the server. In order to  
@@ -320,10 +320,10 @@ need to be nested in the first call so that they share the same jar (I think).
 ## (c) Using Cookies with the _Request_ Library
 Output:  
 Starting my web requests:  
-Testing cookies, "/" path, I sent: {undefined}  
-Testing cookies, "/left" path, I sent: {secondcookie=leftcookie; firstcookie=midcookie}  
-Testing cookies, "/right" path, I sent: {thirdcookie=rightcookie; firstcookie=midcookie}  
-Testing cookies, "/" path, I sent: {firstcookie=midcookie}  
+Testing cookies, "/" path, client sent: {undefined}  
+Testing cookies, "/left" path, client sent: {secondcookie=leftcookie; firstcookie=midcookie}  
+Testing cookies, "/right" path, client sent: {thirdcookie=rightcookie; firstcookie=midcookie}  
+Testing cookies, "/" path, client sent: {firstcookie=midcookie}  
 
 # Question 4
 

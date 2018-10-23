@@ -13,7 +13,7 @@ app.get('/', function(req,res) {
   for(let cookie in req.cookies)
     gotCookies += cookie + ":" + req.cookies[cookie] + ", ";
   gotCookies += "}";
-  res.send("Testing cookies, mid path, I recieved: " + gotCookies);
+  res.send("Testing cookies, mid path, server recieved: " + gotCookies);
 });
 
 app.get('/left', function(req,res) {
@@ -21,7 +21,7 @@ app.get('/left', function(req,res) {
   for(let cookie in req.cookies)
     gotCookies += cookie + ":" + req.cookies[cookie] + ", ";
   gotCookies += "}";
-  res.send("Testing cookies, left path, I recieved: " + gotCookies);
+  res.send("Testing cookies, left path, server recieved: " + gotCookies);
 });
 
 app.get('/right', function(req,res) {
@@ -29,7 +29,7 @@ app.get('/right', function(req,res) {
   for(let cookie in req.cookies)
     gotCookies += cookie + ":" + req.cookies[cookie] + ", ";
   gotCookies += "}";
-  res.send("Testing cookies, right path, I recieved: " + gotCookies);
+  res.send("Testing cookies, right path, server recieved: " + gotCookies);
 });
 
 let host = '0.0.0.0';
