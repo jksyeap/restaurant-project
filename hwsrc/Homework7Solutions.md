@@ -328,3 +328,44 @@ Testing cookies, "/" path, client sent: {firstcookie=midcookie}
 # Question 4
 
 ## (a) Password Authentication
+Code for /register view:  
+```
+app.put('/register', jsonencodedParser, function(req,res) {
+  let user = req.body;
+  db.find({"name": user.name}, function(err,docs) {
+    if(err) 
+      {console.log("database error");}
+    else 
+    {
+      let response = {};
+      if(docs.length == 0)
+      {
+        argon2.hash(user.password).then(hash => {
+          user.password = hash;
+          db.insert(user);
+          response.registration = "succeeded";
+          response.user = user.name;
+          response.reason = undefined;
+          res.send(JSON.stringify(response));
+        });
+      }
+      else
+      {
+        response.registration = "failed";
+        response.user = user.name;
+        response.reason = "user already exists";
+        res.send(JSON.stringify(response));
+      }
+    }
+  });
+});
+```
+
+Database looks like this:  
+{"name":"Owen","nickname":"Vanilla","password":"$argon2i$v=19$m=4096,t=3,p=1$fcdAxZkQ/295vQ0CxM7oIQ$yWtbTEBZ5Rdb6ahLFG7G3u0NLNP2Kqg+99giQlvB9Kk","\_id":"40uBvhHcYC6vQEp0"}  
+{"name":"Danny","nickname":"Doughboy","password":"$argon2i$v=19$m=4096,t=3,p=1$vJlzsTQZyYzZOpPpixrRzQ$hAEiln/xugugzLtb1nYNGNrKiKJkgWRHF9f5rAALBt0","\_id":"6Dr9HbK8oM91S5A1"}  
+{"name":"Pack","nickname":"Half-Pint","password":"$argon2i$v=19$m=4096,t=3,p=1$TuoF/8yMtgR2Xdaz9Twnhw$QLYtumIMkzhLTjjy3JJWKjdgJSGZhFZIDtghSftmlcA","\_id":"mzLCUtwtDHkGlTB9"}  
+{"name":"Steve","nickname":"Outback","password":"$argon2i$v=19$m=4096,t=3,p=1$Xf8Dr7vaPjacQJNl7VuPlw$Wl8hZa6XziivCaYMEcUl9x5T7noUePQSZ8jeq/GO2mw","\_id":"7RXDeMdRaDfN9d25"}  
+{"name":"Karen","nickname":"Six Feet","password":"$argon2i$v=19$m=4096,t=3,p=1$0vuQlzPiwUZUJnWv17Z1jA$IPpwq/MoXA+Oj9LZQtMtKLXXuc4WmBIipu+i8AZkzag","\_id":"i1K4qFz3VwBCOhbj"}  
+
+## (b) Restricting Access to Interfaces

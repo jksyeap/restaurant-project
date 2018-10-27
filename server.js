@@ -4,6 +4,7 @@ var app = express();
 const db = new DataStore({filename: __dirname + '/usernames', autoload: true});
 var bodyparser = require('body-parser');
 var jsonencodedParser = bodyparser.json();
+const argon2 = require('argon2');
 
 app.put('/register', jsonencodedParser, function(req,res) {
   let user = req.body;
@@ -15,11 +16,14 @@ app.put('/register', jsonencodedParser, function(req,res) {
       let response = {};
       if(docs.length == 0)
       {
-        db.insert(user);
-        response.registration = "succeeded";
-        response.user = user.name;
-        response.reason = undefined;
-        res.send(JSON.stringify(response));
+        argon2.hash(user.password).then(hash => {
+          user.password = hash;
+          db.insert(user);
+          response.registration = "succeeded";
+          response.user = user.name;
+          response.reason = undefined;
+          res.send(JSON.stringify(response));
+        });
       }
       else
       {

@@ -207,3 +207,34 @@ request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quo
 <p>Output:<br>Starting my web requests:<br>Testing cookies, &quot;/&quot; path, client sent: {undefined}<br>Testing cookies, &quot;/left&quot; path, client sent: {secondcookie=leftcookie; firstcookie=midcookie}<br>Testing cookies, &quot;/right&quot; path, client sent: {thirdcookie=rightcookie; firstcookie=midcookie}<br>Testing cookies, &quot;/&quot; path, client sent: {firstcookie=midcookie}  </p>
 <h1 id="question-4">Question 4</h1>
 <h2 id="-a-password-authentication">(a) Password Authentication</h2>
+<p>Code for /register view:  </p>
+<pre><code>app.put(&#39;/register&#39;, jsonencodedParser, function(req,res) {
+  let user = req.body;
+  db.find({&quot;name&quot;: user.name}, function(err,docs) {
+    if(err) 
+      {console.log(&quot;database error&quot;);}
+    else 
+    {
+      let response = {};
+      if(docs.length == 0)
+      {
+        argon2.hash(user.password).then(hash =&gt; {
+          user.password = hash;
+          db.insert(user);
+          response.registration = &quot;succeeded&quot;;
+          response.user = user.name;
+          response.reason = undefined;
+          res.send(JSON.stringify(response));
+        });
+      }
+      else
+      {
+        response.registration = &quot;failed&quot;;
+        response.user = user.name;
+        response.reason = &quot;user already exists&quot;;
+        res.send(JSON.stringify(response));
+      }
+    }
+  });
+});</code></pre><p>Database looks like this:<br>{&quot;name&quot;:&quot;Owen&quot;,&quot;nickname&quot;:&quot;Vanilla&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$fcdAxZkQ/295vQ0CxM7oIQ$yWtbTEBZ5Rdb6ahLFG7G3u0NLNP2Kqg+99giQlvB9Kk&quot;,&quot;_id&quot;:&quot;40uBvhHcYC6vQEp0&quot;}<br>{&quot;name&quot;:&quot;Danny&quot;,&quot;nickname&quot;:&quot;Doughboy&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$vJlzsTQZyYzZOpPpixrRzQ$hAEiln/xugugzLtb1nYNGNrKiKJkgWRHF9f5rAALBt0&quot;,&quot;_id&quot;:&quot;6Dr9HbK8oM91S5A1&quot;}<br>{&quot;name&quot;:&quot;Pack&quot;,&quot;nickname&quot;:&quot;Half-Pint&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$TuoF/8yMtgR2Xdaz9Twnhw$QLYtumIMkzhLTjjy3JJWKjdgJSGZhFZIDtghSftmlcA&quot;,&quot;_id&quot;:&quot;mzLCUtwtDHkGlTB9&quot;}<br>{&quot;name&quot;:&quot;Steve&quot;,&quot;nickname&quot;:&quot;Outback&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$Xf8Dr7vaPjacQJNl7VuPlw$Wl8hZa6XziivCaYMEcUl9x5T7noUePQSZ8jeq/GO2mw&quot;,&quot;_id&quot;:&quot;7RXDeMdRaDfN9d25&quot;}<br>{&quot;name&quot;:&quot;Karen&quot;,&quot;nickname&quot;:&quot;Six Feet&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$0vuQlzPiwUZUJnWv17Z1jA$IPpwq/MoXA+Oj9LZQtMtKLXXuc4WmBIipu+i8AZkzag&quot;,&quot;_id&quot;:&quot;i1K4qFz3VwBCOhbj&quot;}  </p>
+<h2 id="-b-restricting-access-to-interfaces">(b) Restricting Access to Interfaces</h2>
