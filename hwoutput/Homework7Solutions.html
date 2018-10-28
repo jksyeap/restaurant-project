@@ -238,3 +238,46 @@ request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quo
   });
 });</code></pre><p>Database looks like this:<br>{&quot;name&quot;:&quot;Owen&quot;,&quot;nickname&quot;:&quot;Vanilla&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$fcdAxZkQ/295vQ0CxM7oIQ$yWtbTEBZ5Rdb6ahLFG7G3u0NLNP2Kqg+99giQlvB9Kk&quot;,&quot;_id&quot;:&quot;40uBvhHcYC6vQEp0&quot;}<br>{&quot;name&quot;:&quot;Danny&quot;,&quot;nickname&quot;:&quot;Doughboy&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$vJlzsTQZyYzZOpPpixrRzQ$hAEiln/xugugzLtb1nYNGNrKiKJkgWRHF9f5rAALBt0&quot;,&quot;_id&quot;:&quot;6Dr9HbK8oM91S5A1&quot;}<br>{&quot;name&quot;:&quot;Pack&quot;,&quot;nickname&quot;:&quot;Half-Pint&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$TuoF/8yMtgR2Xdaz9Twnhw$QLYtumIMkzhLTjjy3JJWKjdgJSGZhFZIDtghSftmlcA&quot;,&quot;_id&quot;:&quot;mzLCUtwtDHkGlTB9&quot;}<br>{&quot;name&quot;:&quot;Steve&quot;,&quot;nickname&quot;:&quot;Outback&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$Xf8Dr7vaPjacQJNl7VuPlw$Wl8hZa6XziivCaYMEcUl9x5T7noUePQSZ8jeq/GO2mw&quot;,&quot;_id&quot;:&quot;7RXDeMdRaDfN9d25&quot;}<br>{&quot;name&quot;:&quot;Karen&quot;,&quot;nickname&quot;:&quot;Six Feet&quot;,&quot;password&quot;:&quot;$argon2i$v=19$m=4096,t=3,p=1$0vuQlzPiwUZUJnWv17Z1jA$IPpwq/MoXA+Oj9LZQtMtKLXXuc4WmBIipu+i8AZkzag&quot;,&quot;_id&quot;:&quot;i1K4qFz3VwBCOhbj&quot;}  </p>
 <h2 id="-b-restricting-access-to-interfaces">(b) Restricting Access to Interfaces</h2>
+<p>Code for the /allUsers view:  </p>
+<pre><code>app.get(&#39;/allUsers&#39;, jsonencodedParser, function(req,res) {
+  let query = req.body;
+  db.find({&quot;name&quot;:query.Rname}, function(err,docs) {
+    if(err)
+      {console.log(&quot;database error&quot;);}
+    else {
+      if(docs.length == 0)
+      {
+        console.log(&quot;User not registered&quot;);
+        res.send(JSON.stringify({&quot;error&quot;:&quot;User not registered&quot;}));
+      }
+      else {
+        argon2.verify(docs[0].password,query.Rpassword).then(match =&gt; {
+          if(match) {
+            let time = new Date();
+            let response = {&quot;date&quot;:time.toString()};
+            db.find({}, function(err,docs) {
+              if(err) 
+                {console.log(&quot;database error&quot;);}
+              else {
+                let names = [];
+                for(let doc of docs)
+                  names.push(doc.name);
+                response.users = names;
+                res.send(JSON.stringify(response));
+              }
+            });
+          }
+          else
+          {
+            console.log(&quot;Incorrect Password&quot;);
+            res.send(JSON.stringify({&quot;error&quot;:&quot;Incorrect Password&quot;}));
+          }
+        });
+      }
+    }
+  });
+});</code></pre><p>(i) nickname request with user name in the database:<br>{ user: &#39;Karen&#39;, nickname: &#39;Six Feet&#39; }  </p>
+<p>(ii) nickname request with user name not in the database:<br>{ user: &#39;Joe&#39;, error: &#39;User not found&#39; }  </p>
+<p>(iii) invalid nickname request with wrong password:<br>{ Rname: &#39;Steve&#39;, error: &#39;Incorrect Password&#39; }  </p>
+<h1 id="question-5">Question 5</h1>
+<h2 id="-a-changing-the-session-fingerprint">(a) Changing the &quot;session fingerprint&quot;</h2>

@@ -36,19 +36,41 @@ app.put('/register', jsonencodedParser, function(req,res) {
   });
 });
 
-app.get('/allUsers', function(req,res) {
-  let time = new Date();
-  let response = {"date":time.toString()};
-  db.find({}, function(err,docs) {
-    if(err) 
+app.get('/allUsers', jsonencodedParser, function(req,res) {
+  let query = req.body;
+  db.find({"name":query.Rname}, function(err,docs) {
+    if(err)
       {console.log("database error");}
-    else
-    {
-      let names = [];
-      for(let doc of docs)
-        names.push(doc.name);
-      response.users = names;
-      res.send(JSON.stringify(response));
+    else {
+      if(docs.length == 0)
+      {
+        console.log("User not registered");
+        res.send(JSON.stringify({"error":"User not registered"}));
+      }
+      else {
+        argon2.verify(docs[0].password,query.Rpassword).then(match => {
+          if(match) {
+            let time = new Date();
+            let response = {"date":time.toString()};
+            db.find({}, function(err,docs) {
+              if(err) 
+                {console.log("database error");}
+              else {
+                let names = [];
+                for(let doc of docs)
+                  names.push(doc.name);
+                response.users = names;
+                res.send(JSON.stringify(response));
+              }
+            });
+          }
+          else
+          {
+            console.log("Incorrect Password");
+            res.send(JSON.stringify({"error":"Incorrect Password"}));
+          }
+        });
+      }
     }
   });
 });
@@ -56,23 +78,52 @@ app.get('/allUsers', function(req,res) {
 app.get('/nickname', jsonencodedParser, function(req,res) {
   let query = req.body;
   console.log(query);
-  db.find({"name": query.user}, function(err,docs) {
+  db.find({"name": query.Rname}, function(err,docs) {
     if(err) 
       {console.log("database error");}
-    else
+    else 
     {
       let response = {};
-      if(docs.length == 0)
+      if(docs.length == 0) 
       {
-        response.user = query.user;
-        response.error = "Not Found";
+        console.log("Not a registered user");
+        response.Rname = query.Rname;
+        response.error = "Not a registered user";
         res.send(JSON.stringify(response));
       }
-      else
+      else 
       {
-        response.user = docs[0].name;
-        response.nickname = docs[0].nickname;
-        res.send(JSON.stringify(response));
+        argon2.verify(docs[0].password,query.Rpassword).then(match => {
+          if(match) {
+            db.find({"name":query.user}, function(err,docs) {
+              if(err)
+                {console.log("database error");}
+              else
+              {
+                if(docs.length == 0)
+                {
+                  console.log("User not found");
+                  response.user = query.user;
+                  response.error = "User not found";
+                  res.send(JSON.stringify(response));
+                }
+                else
+                {
+                  console.log("User found");
+                  response.user = docs[0].name;
+                  response.nickname = docs[0].nickname;
+                  res.send(JSON.stringify(response));
+                }
+              }
+            });
+          }
+          else {
+            console.log("Incorrect Password");
+            response.Rname = query.Rname;
+            response.error = "Incorrect Password";
+            res.send(JSON.stringify(response));
+          }
+        });
       }
     }
   });

@@ -369,3 +369,58 @@ Database looks like this:
 {"name":"Karen","nickname":"Six Feet","password":"$argon2i$v=19$m=4096,t=3,p=1$0vuQlzPiwUZUJnWv17Z1jA$IPpwq/MoXA+Oj9LZQtMtKLXXuc4WmBIipu+i8AZkzag","\_id":"i1K4qFz3VwBCOhbj"}  
 
 ## (b) Restricting Access to Interfaces
+Code for the /allUsers view:  
+```
+app.get('/allUsers', jsonencodedParser, function(req,res) {
+  let query = req.body;
+  db.find({"name":query.Rname}, function(err,docs) {
+    if(err)
+      {console.log("database error");}
+    else {
+      if(docs.length == 0)
+      {
+        console.log("User not registered");
+        res.send(JSON.stringify({"error":"User not registered"}));
+      }
+      else {
+        argon2.verify(docs[0].password,query.Rpassword).then(match => {
+          if(match) {
+            let time = new Date();
+            let response = {"date":time.toString()};
+            db.find({}, function(err,docs) {
+              if(err) 
+                {console.log("database error");}
+              else {
+                let names = [];
+                for(let doc of docs)
+                  names.push(doc.name);
+                response.users = names;
+                res.send(JSON.stringify(response));
+              }
+            });
+          }
+          else
+          {
+            console.log("Incorrect Password");
+            res.send(JSON.stringify({"error":"Incorrect Password"}));
+          }
+        });
+      }
+    }
+  });
+});
+```
+
+(i) nickname request with user name in the database:  
+{ user: 'Karen', nickname: 'Six Feet' }  
+
+(ii) nickname request with user name not in the database:  
+{ user: 'Joe', error: 'User not found' }  
+
+(iii) invalid nickname request with wrong password:  
+{ Rname: 'Steve', error: 'Incorrect Password' }  
+
+# Question 5
+
+## (a) Changing the "session fingerprint"
+
