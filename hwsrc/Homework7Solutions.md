@@ -423,4 +423,39 @@ app.get('/allUsers', jsonencodedParser, function(req,res) {
 # Question 5
 
 ## (a) Changing the "session fingerprint"
+![Image](../hwscreenshots/question5a.png)  
 
+## (b) Verify session ID changes on login
+Before logging in:  
+![Image](../hwscreenshots/question5b1.png)  
+After logging in: 
+![Image](../hwscreenshots/question5b2.png)  
+Code:  
+```        
+let oldInfo = req.session.user;
+req.session.regenerate(function(err) {
+    req.session.user = Object.assign({}, oldInfo, {loggedin: true});
+    res.send('You are logged in!');
+});
+```
+
+## (c) Show access restrictions
+Wind path:  
+![Image](../hwscreenshots/question5c1.png)  
+Wave path:
+![Image](../hwscreenshots/question5c2.png)
+
+Code:  
+```
+if (req.session.user.loggedin) {
+    req.session.user.windcount += 1;
+    res.send(`Wind: wind count: ${req.session.user.windcount}`);
+} else {
+    res.send(`Sorry you have to login to see the wind!`);
+}
+```
+
+## (d) Deleting cookies
+![Image](../hwscreenshots/question5d.png)  
+It looks like to remove the cookie from the browser it deletes the session id value  
+and it sets an expiration date.

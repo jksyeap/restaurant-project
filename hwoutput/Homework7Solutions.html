@@ -281,3 +281,22 @@ request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quo
 <p>(iii) invalid nickname request with wrong password:<br>{ Rname: &#39;Steve&#39;, error: &#39;Incorrect Password&#39; }  </p>
 <h1 id="question-5">Question 5</h1>
 <h2 id="-a-changing-the-session-fingerprint">(a) Changing the &quot;session fingerprint&quot;</h2>
+<p><img src="../hwscreenshots/question5a.png" alt="Image">  </p>
+<h2 id="-b-verify-session-id-changes-on-login">(b) Verify session ID changes on login</h2>
+<p>Before logging in:<br><img src="../hwscreenshots/question5b1.png" alt="Image"><br>After logging in: 
+<img src="../hwscreenshots/question5b2.png" alt="Image"><br>Code:  </p>
+<pre><code>let oldInfo = req.session.user;
+req.session.regenerate(function(err) {
+    req.session.user = Object.assign({}, oldInfo, {loggedin: true});
+    res.send(&#39;You are logged in!&#39;);
+});</code></pre><h2 id="-c-show-access-restrictions">(c) Show access restrictions</h2>
+<p>Wind path:<br><img src="../hwscreenshots/question5c1.png" alt="Image"><br>Wave path:
+<img src="../hwscreenshots/question5c2.png" alt="Image"></p>
+<p>Code:  </p>
+<pre><code>if (req.session.user.loggedin) {
+    req.session.user.windcount += 1;
+    res.send(`Wind: wind count: ${req.session.user.windcount}`);
+} else {
+    res.send(`Sorry you have to login to see the wind!`);
+}</code></pre><h2 id="-d-deleting-cookies">(d) Deleting cookies</h2>
+<p><img src="../hwscreenshots/question5d.png" alt="Image"><br>It looks like to remove the cookie from the browser it deletes the session id value<br>and it sets an expiration date.</p>
