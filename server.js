@@ -9,9 +9,9 @@ const argon2 = require('argon2');
 app.put('/register', jsonencodedParser, function(req,res) {
   let user = req.body;
   db.find({"name": user.name}, function(err,docs) {
-    if(err) 
+    if(err)
       {console.log("database error");}
-    else 
+    else
     {
       let response = {};
       if(docs.length == 0)
@@ -53,7 +53,7 @@ app.get('/allUsers', jsonencodedParser, function(req,res) {
             let time = new Date();
             let response = {"date":time.toString()};
             db.find({}, function(err,docs) {
-              if(err) 
+              if(err)
                 {console.log("database error");}
               else {
                 let names = [];
@@ -79,19 +79,19 @@ app.get('/nickname', jsonencodedParser, function(req,res) {
   let query = req.body;
   console.log(query);
   db.find({"name": query.Rname}, function(err,docs) {
-    if(err) 
+    if(err)
       {console.log("database error");}
-    else 
+    else
     {
       let response = {};
-      if(docs.length == 0) 
+      if(docs.length == 0)
       {
         console.log("Not a registered user");
         response.Rname = query.Rname;
         response.error = "Not a registered user";
         res.send(JSON.stringify(response));
       }
-      else 
+      else
       {
         argon2.verify(docs[0].password,query.Rpassword).then(match => {
           if(match) {
@@ -129,8 +129,8 @@ app.get('/nickname', jsonencodedParser, function(req,res) {
   });
 });
 
-let host = "0.0.0.0";
-let port = "8080";
+let host = "127.3.2.1";
+let port = "80";
 
 app.listen(port, host, function() {
   console.log("Listening on " + host + ":" + port);

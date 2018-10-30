@@ -32,8 +32,8 @@ app.get('/right', function(req,res) {
   res.send("Testing cookies, right path, server recieved: " + gotCookies);
 });
 
-let host = '0.0.0.0';
-let port = '8080';
+let host = '127.3.2.1';
+let port = '80';
 
 app.listen(port, host, function() {
   console.log("Listening on " + host + ":" + port);
