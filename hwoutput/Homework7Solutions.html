@@ -283,15 +283,15 @@ request.get({uri:&quot;http://0.0.0.0:8080/nickname&quot;, json:true, body:{&quo
 <h2 id="-a-changing-the-session-fingerprint">(a) Changing the &quot;session fingerprint&quot;</h2>
 <p><img src="../hwscreenshots/question5a.png" alt="Image">  </p>
 <h2 id="-b-verify-session-id-changes-on-login">(b) Verify session ID changes on login</h2>
-<p>Before logging in:<br><img src="../hwscreenshots/question5b1.png" alt="Image"><br>After logging in: 
-<img src="../hwscreenshots/question5b2.png" alt="Image"><br>Code:  </p>
+<p>Before logging in:<br><img src="../hwscreenshots/question5b1.png" alt="Image">  </p>
+<p>After logging in:<br><img src="../hwscreenshots/question5b2.png" alt="Image">  </p>
+<p>Code:  </p>
 <pre><code>let oldInfo = req.session.user;
 req.session.regenerate(function(err) {
     req.session.user = Object.assign({}, oldInfo, {loggedin: true});
     res.send(&#39;You are logged in!&#39;);
 });</code></pre><h2 id="-c-show-access-restrictions">(c) Show access restrictions</h2>
-<p>Wind path:<br><img src="../hwscreenshots/question5c1.png" alt="Image"><br>Wave path:
-<img src="../hwscreenshots/question5c2.png" alt="Image"></p>
+<p>Wind path:<br><img src="../hwscreenshots/question5c1.png" alt="Image"><br>Wave path:<br><img src="../hwscreenshots/question5c2.png" alt="Image">  </p>
 <p>Code:  </p>
 <pre><code>if (req.session.user.loggedin) {
     req.session.user.windcount += 1;

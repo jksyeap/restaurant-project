@@ -426,10 +426,12 @@ app.get('/allUsers', jsonencodedParser, function(req,res) {
 ![Image](../hwscreenshots/question5a.png)  
 
 ## (b) Verify session ID changes on login
-Before logging in:  
+Before logging in:    
 ![Image](../hwscreenshots/question5b1.png)  
-After logging in: 
+
+After logging in:   
 ![Image](../hwscreenshots/question5b2.png)  
+
 Code:  
 ```        
 let oldInfo = req.session.user;
@@ -442,8 +444,8 @@ req.session.regenerate(function(err) {
 ## (c) Show access restrictions
 Wind path:  
 ![Image](../hwscreenshots/question5c1.png)  
-Wave path:
-![Image](../hwscreenshots/question5c2.png)
+Wave path:  
+![Image](../hwscreenshots/question5c2.png)  
 
 Code:  
 ```
